@@ -10,6 +10,7 @@
     <string name="technology">Technology</string>
     <string name="lifestyle">Lifestyle</string>
     <string name="all">All</string>
+    <string name="please_select">Please Select..</string>
 
     <string-array name="categories">
         <item>Lifestyle</item>

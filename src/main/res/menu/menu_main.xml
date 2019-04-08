@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="moe.dreameh.assignment1.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="moe.dreameh.assignment1.MainActivity"
+    app:showAsAction="ifRoom">
 
     <item
         android:id="@+id/all_menu"

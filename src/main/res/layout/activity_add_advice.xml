@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".AddAdvice">
+    tools:context=".AddAdvice"
+    android:background="@color/background">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/author_name"/>
+        android:text="@string/author_name" />
 
     <EditText
         android:layout_width="match_parent"
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/content"/>
+        android:text="@string/content" />
 
     <EditText
         android:layout_width="match_parent"
@@ -37,7 +38,8 @@
         android:ems="10"
         android:inputType="text"
         android:id="@+id/enter_content"
-        android:hint="@string/enter_content">
+        android:hint="@string/enter_content"
+        android:textColorHint="@color/author">
 
     </EditText>
 
@@ -45,13 +47,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/choose_category"/>
+        android:text="@string/choose_category" />
 
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"/>
+        android:paddingBottom="20dp"
+        android:spinnerMode="dialog" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,7 +70,8 @@
             android:layout_toLeftOf="@id/button_cancel"
             android:layout_toStartOf="@id/button_cancel"
             android:layout_alignTop="@id/button_cancel"
-            android:text="@android:string/ok" />
+            android:text="@android:string/ok"
+            style="?android:attr/borderlessButtonStyle"/>
 
         <Button
             android:id="@+id/button_cancel"

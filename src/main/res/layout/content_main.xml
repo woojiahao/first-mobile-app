@@ -8,12 +8,6 @@
     tools:showIn="@layout/activity_main"
     tools:context=".MainActivity">
 
-<!--    <Spinner
-        android:id="@+id/category_main_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"/>-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
