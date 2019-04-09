@@ -11,6 +11,7 @@
     <string name="lifestyle">Lifestyle</string>
     <string name="all">All</string>
     <string name="please_select">Please Select..</string>
+    <string name="select_a_category">Select a category</string>
 
     <string-array name="categories">
         <item>Lifestyle</item>

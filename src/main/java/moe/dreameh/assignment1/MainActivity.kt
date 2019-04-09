@@ -11,11 +11,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.start_fragment.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private var recyclerView: RecyclerView? = null
-    private var mAdapter: RecyclerView.Adapter<*>? = null
     private var adviceList: MutableList<Advice> = ArrayList()
 
     private val CHILD_ACTIVITY_RESULT = 1
@@ -27,24 +27,17 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Fab actions
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        // Adding a fab to start AddAdviceActivity
         fab.setOnClickListener { startChildActivity() }
 
         // RecyclerView settings
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView!!.setHasFixedSize(true)
+        recycler_view.setHasFixedSize(true)
 
         // using a linear layout manager
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView!!.layoutManager = layoutManager
+        recycler_view.layoutManager = LinearLayoutManager(this)
 
         // Specify adapter for recyclerView
-        mAdapter = AdviceAdapter(adviceList)
-        recyclerView!!.adapter = mAdapter
-
-        // Seed the advice list
-        seedAdviceList()
+        recycler_view.adapter = AdviceAdapter(adviceList)
     }
 
 
@@ -71,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 adviceList.add(Advice(adviceBundle!!.getString("AUTHOR"),
                         adviceBundle.getString("CATEGORY"), adviceBundle.getString("CONTENT")))
 
-                mAdapter!!.notifyDataSetChanged()
+                recycler_view.adapter?.notifyDataSetChanged()
 
             }
         }
@@ -90,23 +83,23 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.all_menu -> {
-                recyclerView!!.swapAdapter(AdviceAdapter(adviceList), true)
-                mAdapter!!.notifyDataSetChanged()
+                recycler_view.swapAdapter(AdviceAdapter(adviceList), true)
+                recycler_view.adapter?.notifyDataSetChanged()
                 return true
             }
             R.id.lifestyle_menu -> {
-                recyclerView!!.swapAdapter(AdviceAdapter(getCategoryItems("Lifestyle")), true)
-                mAdapter!!.notifyDataSetChanged()
+                recycler_view.swapAdapter(AdviceAdapter(getCategoryItems("Lifestyle")), true)
+                recycler_view.adapter?.notifyDataSetChanged()
                 return true
             }
             R.id.misc_menu -> {
-                recyclerView!!.swapAdapter(AdviceAdapter(getCategoryItems("Miscellaneous")), true)
-                mAdapter!!.notifyDataSetChanged()
+                recycler_view.swapAdapter(AdviceAdapter(getCategoryItems("Miscellaneous")), true)
+                recycler_view.adapter?.notifyDataSetChanged()
                 return true
             }
             R.id.tech_menu -> {
-                recyclerView!!.swapAdapter(AdviceAdapter(getCategoryItems("Technology")), true)
-                mAdapter!!.notifyDataSetChanged()
+                recycler_view.swapAdapter(AdviceAdapter(getCategoryItems("Technology")), true)
+                recycler_view.adapter?.notifyDataSetChanged()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -124,20 +117,4 @@ class MainActivity : AppCompatActivity() {
         return newlist
     }
 
-    private fun seedAdviceList() {
-        adviceList.add(Advice("Oscar Unas", "Lifestyle", "Spicy jalapeno " +
-                "bacon ipsum dolor amet strip steak salami pancetta filet" +
-                " mignon t-bone ham shankle bresaola frankfurter rump."))
-
-        adviceList.add(Advice("Iron Man", "Technology", "Spicy jalapeno " +
-                "bacon ipsum dolor amet strip steak salami pancetta filet" +
-                " mignon t-bone ham shankle bresaola frankfurter rump."))
-
-        adviceList.add(Advice("Green Lantern", "Miscellaneous", "Spicy jalapeno " +
-                "bacon ipsum dolor amet strip steak salami pancetta filet" +
-                " mignon t-bone ham shankle bresaola frankfurter rump."))
-
-        mAdapter!!.notifyDataSetChanged()
-
-    }
 }
