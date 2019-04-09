@@ -16,7 +16,6 @@ class AddAdvice : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_advice)
-        if(savedInstanceState != null) Log.i("Saved state: ", "Not empty")
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -62,8 +61,10 @@ class AddAdvice : AppCompatActivity() {
 
     private fun addAdviceBundle() {
         // Insert all the content into the bundle.
-        bundle.putString("AUTHOR", enter_name.text.toString())
-        bundle.putString("CONTENT", enter_content.text.toString())
-        bundle.putString("CATEGORY", category[0])
+        with (bundle) {
+            putString("AUTHOR", enter_name.text.toString())
+            putString("CONTENT", enter_content.text.toString())
+            putString("CATEGORY", category[0])
+        }
     }
 }
