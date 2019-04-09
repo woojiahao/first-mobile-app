@@ -1,5 +1,6 @@
 package moe.dreameh.assignment1.ui
 
+import android.annotation.TargetApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -11,19 +12,29 @@ class SharedViewModel : ViewModel() {
 
     val list : MutableList<Advice> = ArrayList()
 
-    private val adviceList: MutableLiveData<List<Advice>> by lazy {
-        MutableLiveData<List<Advice>>().also { loadAdvices() }
+    val adviceList: MutableLiveData<MutableList<Advice>> by lazy {
+        MutableLiveData<MutableList<Advice>>().also { loadAdvices() }
     }
 
-    fun getAdvices(): LiveData<List<Advice>> {
-        return adviceList
+    fun getAdvices(): MutableList<Advice>? {
+        return adviceList.value
     }
 
     fun setNewAdvice(advice: Advice) {
-            list.add(advice)
+            adviceList.value?.add(advice)
     }
 
-    private fun loadAdvices() {
+    fun filterAdvices(category: String): MutableList<Advice> {
+        val filteredList:  MutableList<Advice> = ArrayList()
+        for(advice in list) {
+            if (advice.category == category) {
+                filteredList.add(advice)
+            }
+        }
+        return filteredList
+    }
+
+    fun loadAdvices() {
         list.add(Advice("Han Kolo", "Lifestyle", "I still get a funny feeling about that old man and the kid. I'm not sure what it is about them, but they're trouble"))
         list.add(Advice("Obi-wan Henobi", "Technology", "These aren't the droids you're looking for."))
         list.add(Advice("Darth Vaber", "Miscellaneous", "Impressive. Most impressive. Obi-Wan has taught you well. You have controlled your fear. Now, release your anger. Only your hatred can destroy me."))

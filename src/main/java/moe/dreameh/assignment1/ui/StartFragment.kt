@@ -7,24 +7,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.get
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.activity_add_advice.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.advice_list_row.*
 import kotlinx.android.synthetic.main.start_fragment.*
+import moe.dreameh.assignment1.Advice
+import moe.dreameh.assignment1.AdviceAdapter
 
 import moe.dreameh.assignment1.R
 
-class startFragment : Fragment() {
+class StartFragment : Fragment() {
 
-    private var mAdapter: RecyclerView.Adapter<*>? = null
+    private var viewModel: SharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView  = inflater.inflate(R.layout.start_fragment, container, false)
         // Setting up the starting view's spinner for categories.
         setupSpinner(rootView.context)
+        setupRecyclerView()
+
+        fab_button?.setOnClickListener { Navigation.findNavController(rootView).navigate(R.id.action_startFragment_to_addAdviceFragment) }
+
+        viewModel.adviceList.observe(this, Observer<MutableList<Advice>> { advices ->
+
+        })
 
         return rootView
     }
@@ -32,13 +44,10 @@ class startFragment : Fragment() {
     private fun setupRecyclerView() {
         // RecyclerView settings
         recycler_view.setHasFixedSize(true)
-
         // using a linear layout manager
         recycler_view.layoutManager = LinearLayoutManager(activity)
-
         // Specify adapter for recyclerView
-        //mAdapter = AdviceAdapter(adviceList)
-        recycler_view.adapter = mAdapter
+        recycler_view.adapter = AdviceAdapter(viewModel.getAdvices()!!)
     }
 
     private fun setupSpinner(context : Context) {
@@ -57,7 +66,20 @@ class startFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                // Getting the category spinner item and checking if it's related to "All" or the rest of them.
+                if(parent.getItemAtPosition(position).toString().equals("All")) {
+                    recycler_view.adapter = AdviceAdapter(viewModel.getAdvices()!!)
+                } else {
+                    recycler_view.adapter = AdviceAdapter(viewModel.filterAdvices(parent.getItemAtPosition(position).toString()))
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Nothing will be added here.
+            }
+        }
     }
 
 

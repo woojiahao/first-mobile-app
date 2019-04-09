@@ -26,7 +26,7 @@ class AdviceAdapter(private val adviceList: MutableList<Advice>) : RecyclerView.
 
     // Set ViewHolder variables to the list's item variables
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val advice = adviceList[position].also { advice ->
+        adviceList[position].also { advice ->
             holder.author.text = advice.author
             holder.category.text = advice.category
             holder.content.text = advice.content

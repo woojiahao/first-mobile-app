@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="moe.dreameh.assignment1.ui.startFragment"
+        android:name="moe.dreameh.assignment1.ui.StartFragment"
         android:label="start_fragment"
         tools:layout="@layout/start_fragment" >
         <action
