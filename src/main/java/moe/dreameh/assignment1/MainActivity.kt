@@ -60,12 +60,11 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == CHILD_ACTIVITY_RESULT) {
 
             if (resultCode == Activity.RESULT_CANCELED) {
-                val toast = Toast.makeText(applicationContext, "No advice was added.",
-                        Toast.LENGTH_LONG)
-                toast.show()
+                Toast.makeText(applicationContext, "No advice was added.",
+                        Toast.LENGTH_LONG).show()
+
             } else if (resultCode == Activity.RESULT_OK) {
-                val toast = Toast.makeText(applicationContext, "A new advice has been" + " added.", Toast.LENGTH_LONG)
-                toast.show()
+                Toast.makeText(applicationContext, "A new advice has been" + " added.", Toast.LENGTH_LONG).show()
 
                 adviceBundle = data!!.extras
 
@@ -78,7 +77,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -89,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
 
         when (item.itemId) {
             R.id.all_menu -> {

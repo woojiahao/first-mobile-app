@@ -3,9 +3,11 @@ package moe.dreameh.assignment1
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_add_advice.*
 
 class AddAdvice : AppCompatActivity() {
     private var bundle = Bundle()
@@ -14,19 +16,20 @@ class AddAdvice : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_advice)
-
-        // Initialization of the spinner
-        val spinner = findViewById<Spinner>(R.id.category_spinner)
+        if(savedInstanceState != null) Log.i("Saved state: ", "Not empty")
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        val adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories, android.R.layout.simple_spinner_item)
+        ArrayAdapter.createFromResource(
+                this,
+                R.array.categories,
+                android.R.layout.simple_spinner_item).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            category_spinner.adapter = adapter
+        }
 
-        // Specifiy the layout to use when the list of choices appear
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        category_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 category[0] = parent.getItemAtPosition(position).toString()
             }
@@ -36,29 +39,21 @@ class AddAdvice : AppCompatActivity() {
             }
         }
 
-
         // Set cancel result
-        val buttonCancel = findViewById<Button>(R.id.button_cancel)
-        buttonCancel.setOnClickListener {
+        button_cancel.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
 
-        val buttonOk = findViewById<Button>(R.id.button_create)
-        buttonOk.setOnClickListener {
-            val authorName = findViewById<EditText>(R.id.enter_name)
-            val contentAmount = findViewById<EditText>(R.id.enter_content)
-
-
+        button_create.setOnClickListener {
             when {
-                authorName.text.isEmpty() -> authorName.error = "Field cannot be left blank."
-                contentAmount.text.isEmpty() -> contentAmount.error = "Field cannot be left blank."
+                enter_name.text.isEmpty() -> enter_name.error = "Field cannot be left blank."
+                enter_content.text.isEmpty() -> enter_content.error = "Field cannot be left blank."
                 else -> {
+                    // Add the contents of the fields into the bundle.
                     addAdviceBundle()
 
-                    val resultIntent = Intent().putExtras(bundle)
-                    //resultIntent.putExtras(bundle)
-                    setResult(Activity.RESULT_OK, resultIntent)
+                    setResult(Activity.RESULT_OK, Intent().putExtras(bundle))
                     finish()
                 }
             }
@@ -66,15 +61,9 @@ class AddAdvice : AppCompatActivity() {
     }
 
     private fun addAdviceBundle() {
-        // Finding both EditTexts
-        val authorName = findViewById<EditText>(R.id.enter_name)
-        val contentAmount = findViewById<EditText>(R.id.enter_content)
-
-
-        bundle.putString("AUTHOR", authorName.text.toString())
-        bundle.putString("CONTENT", contentAmount.text.toString())
+        // Insert all the content into the bundle.
+        bundle.putString("AUTHOR", enter_name.text.toString())
+        bundle.putString("CONTENT", enter_content.text.toString())
         bundle.putString("CATEGORY", category[0])
     }
-
-
 }
