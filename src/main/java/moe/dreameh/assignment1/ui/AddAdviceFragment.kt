@@ -64,7 +64,7 @@ class AddAdviceFragment : Fragment() {
         return rootView
     }
 
-    fun setupCategorySpinner(context: Context) {
+    private fun setupCategorySpinner(context: Context) {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
                 context,
